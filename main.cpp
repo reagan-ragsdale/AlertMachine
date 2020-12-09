@@ -15,33 +15,33 @@ public:
   virtual ~MobileAlertState() {}
 };
 
-class Vibration : public MobileAlertState {
+class Call : public MobileAlertState {
 public:
 	void alert(AlertStateContext *ctx) {
-		cout << "vibration...\n";
+		cout << "Annoying Samsung theme ringtone\n";
 	}
 	void alertType() {
-		cout << "Set to Vibration Type\n";
+		cout << "Incoming Call\n";
 	}
 };
 
-class Silent : public MobileAlertState {
+class Text : public MobileAlertState {
 public:
 	void alert(AlertStateContext *ctx) {
-		cout << "silent...\n";
+		cout << "Buzz Buzz\n";
 	}
 	void alertType() {
-		cout << "Set to Silent Type\n";
+		cout << "New text Message\n";
 	}
 };
 
-class Ringer : public MobileAlertState {
+class Email : public MobileAlertState {
 public:
 	void alert(AlertStateContext *ctx) {
-		cout << "ring ring ring...\n";
+		cout << "Ding\n";
 	}
 	void alertType() {
-		cout << "Set to Ringer Type\n";
+		cout << "New emial\n";
 	}
 };
 
@@ -68,33 +68,29 @@ public:
 };
 
 int main() {
-  MobileAlertState* vibrate = new Vibration;
-	AlertStateContext *stateContext = new AlertStateContext(vibrate);
+  MobileAlertState* call = new Call;
+	AlertStateContext *stateContext = new AlertStateContext(call);
 	stateContext->getState()->alertType();
 	stateContext->alert();
 	stateContext->alert();
-  MobileAlertState* silent = new Silent;
-	stateContext->setState(silent);
+  MobileAlertState* text = new Text;
+	stateContext->setState(text);
 	stateContext->getState()->alertType();
 	stateContext->alert();
-	stateContext->alert();
-	stateContext->alert();
-  MobileAlertState* ringer = new Ringer;
-  stateContext->setState(ringer);
+  MobileAlertState* email = new Email;
+  stateContext->setState(email);
 	stateContext->getState()->alertType();
 	stateContext->alert();
-	stateContext->alert();
-	stateContext->alert();
-  stateContext->setState(silent);
+
+  stateContext->setState(text);
 	stateContext->getState()->alertType();
 	stateContext->alert();
-	stateContext->alert();
-	stateContext->alert();
-  delete silent;
-  stateContext->setState(vibrate);
+
+  delete text;
+  stateContext->setState(call);
 	stateContext->getState()->alertType();
 	stateContext->alert();
 	stateContext->alert();
 	stateContext->alert();
-  delete vibrate;
+  delete call;
 }
