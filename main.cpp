@@ -15,33 +15,33 @@ public:
   virtual ~MobileAlertState() {}
 };
 
-class Call : public MobileAlertState {
+class Workday : public MobileAlertState {
 public:
 	void alert(AlertStateContext *ctx) {
-		cout << "Annoying Samsung theme ringtone\n";
+		cout << "Ring Ring Ring\n";
 	}
 	void alertType() {
-		cout << "Incoming Call\n";
+		cout << "Workday: Incoming Call\n";
 	}
 };
 
-class Text : public MobileAlertState {
+class Evening : public MobileAlertState {
 public:
 	void alert(AlertStateContext *ctx) {
 		cout << "Buzz Buzz\n";
 	}
 	void alertType() {
-		cout << "New text Message\n";
+		cout << "Evening: Incoming call\n";
 	}
 };
 
-class Email : public MobileAlertState {
+class Night : public MobileAlertState {
 public:
 	void alert(AlertStateContext *ctx) {
-		cout << "Ding\n";
+		cout << "silent silent silent\n";
 	}
 	void alertType() {
-		cout << "New emial\n";
+		cout << "Night: Incoming call\n";
 	}
 };
 
@@ -68,29 +68,22 @@ public:
 };
 
 int main() {
-  MobileAlertState* call = new Call;
-	AlertStateContext *stateContext = new AlertStateContext(call);
+  MobileAlertState* work = new Workday;
+	AlertStateContext *stateContext = new AlertStateContext(work);
 	stateContext->getState()->alertType();
 	stateContext->alert();
 	stateContext->alert();
-  MobileAlertState* text = new Text;
-	stateContext->setState(text);
+  MobileAlertState* eve = new Evening;
+	stateContext->setState(eve);
 	stateContext->getState()->alertType();
 	stateContext->alert();
-  MobileAlertState* email = new Email;
-  stateContext->setState(email);
+  stateContext->alert();
+  MobileAlertState* night = new Night;
+  stateContext->setState(night);
 	stateContext->getState()->alertType();
 	stateContext->alert();
+  stateContext->alert();
 
-  stateContext->setState(text);
-	stateContext->getState()->alertType();
-	stateContext->alert();
-
-  delete text;
-  stateContext->setState(call);
-	stateContext->getState()->alertType();
-	stateContext->alert();
-	stateContext->alert();
-	stateContext->alert();
-  delete call;
+  
+  
 }
